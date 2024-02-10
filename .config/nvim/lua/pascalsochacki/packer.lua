@@ -22,6 +22,7 @@ return require('packer').startup(function(use)
       )
 
   use('b0o/schemastore.nvim')
+  use('christoomey/vim-tmux-navigator')
 
   use('mbbill/undotree')
   use('tpope/vim-fugitive')

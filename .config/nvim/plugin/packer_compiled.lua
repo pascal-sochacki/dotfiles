@@ -49,8 +49,8 @@ local function save_profiles(threshold)
 end
 
 time([[Luarocks path setup]], true)
-local package_path_str = "/Users/pascalsochacki/.cache/nvim/packer_hererocks/2.1.1700008891/share/lua/5.1/?.lua;/Users/pascalsochacki/.cache/nvim/packer_hererocks/2.1.1700008891/share/lua/5.1/?/init.lua;/Users/pascalsochacki/.cache/nvim/packer_hererocks/2.1.1700008891/lib/luarocks/rocks-5.1/?.lua;/Users/pascalsochacki/.cache/nvim/packer_hererocks/2.1.1700008891/lib/luarocks/rocks-5.1/?/init.lua"
-local install_cpath_pattern = "/Users/pascalsochacki/.cache/nvim/packer_hererocks/2.1.1700008891/lib/lua/5.1/?.so"
+local package_path_str = "/Users/pascalsochacki/.cache/nvim/packer_hererocks/2.1.1703358377/share/lua/5.1/?.lua;/Users/pascalsochacki/.cache/nvim/packer_hererocks/2.1.1703358377/share/lua/5.1/?/init.lua;/Users/pascalsochacki/.cache/nvim/packer_hererocks/2.1.1703358377/lib/luarocks/rocks-5.1/?.lua;/Users/pascalsochacki/.cache/nvim/packer_hererocks/2.1.1703358377/lib/luarocks/rocks-5.1/?/init.lua"
+local install_cpath_pattern = "/Users/pascalsochacki/.cache/nvim/packer_hererocks/2.1.1703358377/lib/lua/5.1/?.so"
 if not string.find(package.path, package_path_str, 1, true) then
   package.path = package.path .. ';' .. package_path_str
 end
@@ -189,6 +189,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/pascalsochacki/.local/share/nvim/site/pack/packer/start/vim-helm",
     url = "https://github.com/towolf/vim-helm"
+  },
+  ["vim-tmux-navigator"] = {
+    loaded = true,
+    path = "/Users/pascalsochacki/.local/share/nvim/site/pack/packer/start/vim-tmux-navigator",
+    url = "https://github.com/christoomey/vim-tmux-navigator"
   }
 }
 

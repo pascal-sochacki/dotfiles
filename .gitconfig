@@ -1,0 +1,12 @@
+[alias]
+	s = status
+[user]
+	name = Pascal Sochacki
+	email = pascal@sochacki.dev
+	signingkey = DEEF26B15C37582408172C8DB88D7A1C8E2A8CC2
+[pull]
+	rebase = true
+[push]
+	autoSetupRemote = true
+[core]
+	excludesfile = /Users/pascalsochacki/.gitignore

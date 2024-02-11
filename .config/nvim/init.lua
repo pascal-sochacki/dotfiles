@@ -1,1 +1,95 @@
-require("pascalsochacki")
+vim.g.mapleader = " "
+vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
+vim.opt.nu = true
+vim.opt.relativenumber = true
+
+vim.opt.tabstop = 4
+vim.opt.softtabstop = 4
+vim.opt.shiftwidth = 4
+vim.opt.expandtab = true
+
+vim.opt.smartindent = true
+
+vim.opt.wrap = false
+
+vim.opt.swapfile = false
+vim.opt.backup = false
+vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
+vim.opt.undofile = true
+
+vim.opt.hlsearch = false
+vim.opt.incsearch = true
+
+vim.opt.termguicolors = true
+
+vim.opt.scrolloff = 8
+vim.opt.signcolumn = "yes"
+vim.opt.isfname:append("@-@")
+
+vim.opt.updatetime = 50
+
+vim.opt.colorcolumn = "80"
+
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
+end
+vim.opt.rtp:prepend(lazypath)
+
+require("lazy").setup("plugins")
+
+local augroup = vim.api.nvim_create_augroup
+local autocmd = vim.api.nvim_create_autocmd
+
+local yank_group = augroup('HighlightYank', {})
+
+autocmd('TextYankPost', {
+    group = yank_group,
+    pattern = '*',
+    callback = function()
+        vim.highlight.on_yank({
+            higroup = 'IncSearch',
+            timeout = 300,
+        })
+    end,
+})
+
+local attach_to_buffer = function (output_bufnr, command, pattern)
+    vim.api.nvim_create_autocmd("BufWritePost", {
+        group = vim.api.nvim_create_augroup("pascal-autorun", {clear = true}),
+        pattern = pattern,
+        callback = function ()
+
+            local append_data = function (_, data)
+                if data then
+                    vim.api.nvim_buf_set_lines(output_bufnr, -1, -1, false, data)
+                end
+            end
+
+            vim.api.nvim_buf_set_lines(output_bufnr, 0, -1, false, {"auto run output:"})
+            vim.fn.jobstart(command, {
+                stdout_buffered = true,
+                on_stdout = append_data,
+                on_stderr = append_data,
+            })
+        end
+
+    })
+end
+
+vim.api.nvim_create_user_command("AutoRun", function ()
+    vim.cmd('vnew')
+
+    local bufnr = vim.api.nvim_get_current_buf()
+    local command = vim.split(vim.fn.input("Command: "), " ")
+    local pattern = vim.fn.input("Pattern: ")
+
+    attach_to_buffer(bufnr, command, pattern)
+end, {})

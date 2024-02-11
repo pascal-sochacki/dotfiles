@@ -26,6 +26,7 @@ return {
         require("mason-lspconfig").setup({
             ensure_installed = {
                 "lua_ls",
+                "yamlls",
                 "tsserver",
             },
             handlers = {
@@ -34,10 +35,36 @@ return {
                         capabilities = capabilities
                     }
                 end,
+                ["yamlls"] = function ()
+                    local lspconfig = require("lspconfig")
+                    lspconfig.yamlls.setup {
+                        settings = {
+                            capabilities = capabilities,
+                            format = {
+                                enable = true,
+                                singleQuote = false,
+                                bracketSpacing = true
+                            },
+                            validate = true,
+                            completion = true,
+                            yaml = {
+                                schemaStore = {
+                                    enable = false,
+                                    url = ""
+                                },
+                                schemas = {
+                                    ["https://gitlab.com/gitlab-org/gitlab/-/raw/master/app/assets/javascripts/editor/schema/ci.json"] = {"*gitlab-ci*.{yml,yaml}"},
+                                    kubernetes = {"/*.yaml"}
+                                }
+                            }
+                        }
+                    }
+                end,
                 ["lua_ls"] = function ()
                     local lspconfig = require("lspconfig")
                     lspconfig.lua_ls.setup {
                         capabilities = capabilities,
+
                         settings = {
                             Lua = {
                                 diagnostics = {

@@ -27,6 +27,7 @@ vim.opt.signcolumn = "yes"
 vim.opt.isfname:append("@-@")
 
 vim.opt.updatetime = 50
+vim.keymap.set("n", "<F2>", vim.diagnostic.goto_next)
 
 vim.opt.colorcolumn = "80"
 

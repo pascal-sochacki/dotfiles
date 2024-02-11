@@ -35,7 +35,7 @@ return {
                         capabilities = capabilities
                     }
                 end,
-                ["yamlls"] = function ()
+                ["yamlls"] = function()
                     local lspconfig = require("lspconfig")
                     lspconfig.yamlls.setup {
                         settings = {
@@ -47,20 +47,22 @@ return {
                             },
                             validate = true,
                             completion = true,
+                            hover = true,
                             yaml = {
                                 schemaStore = {
                                     enable = false,
                                     url = ""
                                 },
                                 schemas = {
-                                    ["https://gitlab.com/gitlab-org/gitlab/-/raw/master/app/assets/javascripts/editor/schema/ci.json"] = {"*gitlab-ci*.{yml,yaml}"},
-                                    kubernetes = {"/*.yaml"}
+                                    ["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] = { "docker-compose.{yml,yaml}" },
+                                    ["https://gitlab.com/gitlab-org/gitlab/-/raw/master/app/assets/javascripts/editor/schema/ci.json"] = { "*gitlab-ci*.{yml,yaml}" },
+                                    kubernetes = { "/*.yaml" }
                                 }
                             }
                         }
                     }
                 end,
-                ["lua_ls"] = function ()
+                ["lua_ls"] = function()
                     local lspconfig = require("lspconfig")
                     lspconfig.lua_ls.setup {
                         capabilities = capabilities,
@@ -108,8 +110,6 @@ return {
                 prefix = "",
             },
         })
-
-
     end
 
 }

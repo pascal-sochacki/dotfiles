@@ -10,6 +10,7 @@ return {
         "hrsh7th/nvim-cmp",
         "L3MON4D3/LuaSnip",
         "saadparwaiz1/cmp_luasnip",
+        "rafamadriz/friendly-snippets",
         "j-hui/fidget.nvim",
     },
     config = function()
@@ -23,6 +24,25 @@ return {
 
         require("fidget").setup({})
         require("mason").setup()
+        local luasnip = require("luasnip")
+        luasnip.config.set_config({
+            history = true,
+            updateevents = "TextChanged,TextChangedI"
+        })
+
+        vim.keymap.set({"i", "s"}, "<c-k>", function ()
+            if luasnip.expand_or_jumpable() then
+                luasnip.expand_or_jump()
+            end
+        end, {silent = true})
+
+        vim.keymap.set({"i", "s"}, "<c-j>", function ()
+            if luasnip.jumpable(-1) then
+                luasnip.jump(-1)
+            end
+        end, {silent = true})
+
+        require("luasnip.loaders.from_vscode").lazy_load()
         require("mason-lspconfig").setup({
             ensure_installed = {
                 "lua_ls",
@@ -82,7 +102,7 @@ return {
         cmp.setup({
             snippet = {
                 expand = function(args)
-                    require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+                    luasnip.lsp_expand(args.body) -- For `luasnip` users.
                 end,
             },
             mapping = cmp.mapping.preset.insert({
@@ -94,8 +114,8 @@ return {
             sources = cmp.config.sources({
                 { name = 'nvim_lsp' },
                 { name = 'luasnip' }, -- For luasnip users.
-            }, {
                 { name = 'buffer' },
+                { name = "path" },
             })
         })
 

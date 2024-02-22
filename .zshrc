@@ -125,7 +125,3 @@ esac
 
 export PATH="$PATH:/Users/pascalsochacki/.rd/bin"
 export PATH=$PATH:"/Users/pascalsochacki/go/bin"
-
-### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
-export PATH="/Users/pascalsochacki/.rd/bin:$PATH"
-### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)

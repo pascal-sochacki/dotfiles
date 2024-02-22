@@ -74,6 +74,7 @@ return {
                                     url = ""
                                 },
                                 schemas = {
+                                    ["https://json.schemastore.org/kustomization.json"] = { "kustomization.{yml,yaml}" },
                                     ["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] = { "docker-compose.{yml,yaml}" },
                                     ["https://gitlab.com/gitlab-org/gitlab/-/raw/master/app/assets/javascripts/editor/schema/ci.json"] = { "*gitlab-ci*.{yml,yaml}" },
                                     kubernetes = { "/*.yaml" }

@@ -8,8 +8,11 @@ return {
         "hrsh7th/cmp-path",
         "hrsh7th/cmp-cmdline",
         "hrsh7th/nvim-cmp",
+        "b0o/schemastore.nvim",
         "L3MON4D3/LuaSnip",
         "saadparwaiz1/cmp_luasnip",
+        'towolf/vim-helm',
+        "neovim/nvim-lspconfig",
         "rafamadriz/friendly-snippets",
         "j-hui/fidget.nvim",
     },
@@ -46,6 +49,7 @@ return {
         require("mason-lspconfig").setup({
             ensure_installed = {
                 "lua_ls",
+                "helm-ls",
                 "yamlls",
                 "tsserver",
             },
@@ -53,6 +57,30 @@ return {
                 function(server_name) -- default handler (optional)
                     require("lspconfig")[server_name].setup {
                         capabilities = capabilities
+                    }
+                end,
+                ["helm_ls"] = function ()
+                    local lspconfig = require('lspconfig')
+                    lspconfig.helm_ls.setup {
+                        settings = {
+                            ['helm-ls'] = {
+                                yamlls = {
+                                    path = "yaml-language-server",
+                                }
+                            }
+                        }
+                    }
+
+                end,
+                ["jsonls"] = function ()
+                    local lspconfig = require("lspconfig")
+                    lspconfig.jsonls.setup {
+                        settings = {
+                            json = {
+                                schemas = require('schemastore').json.schemas(),
+                                validate = { enable = true },
+                            }
+                        }
                     }
                 end,
                 ["yamlls"] = function()
@@ -75,6 +103,7 @@ return {
                                 },
                                 schemas = {
                                     ["https://json.schemastore.org/kustomization.json"] = { "kustomization.{yml,yaml}" },
+                                    ["../values.schema.json"] = { "*values*.{yml,yaml}" },
                                     ["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] = { "docker-compose.{yml,yaml}" },
                                     ["https://gitlab.com/gitlab-org/gitlab/-/raw/master/app/assets/javascripts/editor/schema/ci.json"] = { "*gitlab-ci*.{yml,yaml}" },
                                     kubernetes = { "/*.yaml" }

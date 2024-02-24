@@ -31,6 +31,19 @@ vim.keymap.set("n", "<F2>", vim.diagnostic.goto_next)
 
 vim.opt.colorcolumn = "80"
 
+local augroup = vim.api.nvim_create_augroup
+local pascal = augroup('pascal', {})
+local autocmd = vim.api.nvim_create_autocmd
+
+autocmd({'BufNewFile', 'BufRead'}, {
+    group = pascal,
+    pattern = { '*/templates/*.yaml'},
+    callback = function()
+        print("run")
+        vim.opt_local.filetype = 'helm'
+    end,
+})
+
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
     vim.fn.system({
@@ -46,8 +59,6 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup("plugins")
 
-local augroup = vim.api.nvim_create_augroup
-local autocmd = vim.api.nvim_create_autocmd
 
 local yank_group = augroup('HighlightYank', {})
 
@@ -63,7 +74,6 @@ autocmd('TextYankPost', {
 })
 vim.keymap.set("n", "<leader>f", vim.lsp.buf.format)
 
-local pascal = augroup('pascal', {})
 
 autocmd('LspAttach', {
     group = pascal,
@@ -81,6 +91,7 @@ autocmd('LspAttach', {
         vim.keymap.set("n", "]d", function() vim.diagnostic.goto_prev() end, opts)
     end
 })
+
 
 local attach_to_buffer = function(output_bufnr, command, pattern)
     vim.api.nvim_create_autocmd("BufWritePost", {
@@ -113,3 +124,5 @@ vim.api.nvim_create_user_command("AutoRun", function()
 
     attach_to_buffer(bufnr, command, pattern)
 end, {})
+
+

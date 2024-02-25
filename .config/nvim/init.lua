@@ -35,11 +35,16 @@ local augroup = vim.api.nvim_create_augroup
 local pascal = augroup('pascal', {})
 local autocmd = vim.api.nvim_create_autocmd
 
+vim.filetype.add({
+    extension = {
+        templ = 'templ',
+    }
+})
+
 autocmd({'BufNewFile', 'BufRead'}, {
     group = pascal,
     pattern = { '*/templates/*.yaml'},
     callback = function()
-        print("run")
         vim.opt_local.filetype = 'helm'
     end,
 })

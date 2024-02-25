@@ -102,11 +102,11 @@ return {
                                     url = ""
                                 },
                                 schemas = {
-                                    ["https://json.schemastore.org/kustomization.json"] = { "kustomization.{yml,yaml}" },
-                                    ["../values.schema.json"] = { "*values*.{yml,yaml}" },
-                                    ["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] = { "docker-compose.{yml,yaml}" },
-                                    ["https://gitlab.com/gitlab-org/gitlab/-/raw/master/app/assets/javascripts/editor/schema/ci.json"] = { "*gitlab-ci*.{yml,yaml}" },
-                                    kubernetes = { "/*.yaml" }
+                                    ["https://json.schemastore.org/kustomization.json"] = "kustomization.{yml,yaml}" ,
+                                    ["https://json.schemastore.org/helmfile.json"] = "helmfile.{yml,yaml}" ,
+                                    ["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] = "/*docker-compose*.{yml,yaml}" ,
+                                    ["https://gitlab.com/gitlab-org/gitlab/-/raw/master/app/assets/javascripts/editor/schema/ci.json"] = "*gitlab-ci*.{yml,yaml}" ,
+                                    kubernetes =  "/*.yaml"
                                 }
                             }
                         }

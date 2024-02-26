@@ -49,7 +49,7 @@ return {
         require("mason-lspconfig").setup({
             ensure_installed = {
                 "lua_ls",
-                "helm-ls",
+                "helm_ls",
                 "yamlls",
                 "tsserver",
             },

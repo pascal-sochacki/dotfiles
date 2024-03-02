@@ -138,6 +138,7 @@ vim.api.nvim_create_user_command("PwGen", function()
         local index = math.random(1, #char)
         password = password .. string.sub(char, index, index)
     end
+    vim.api.nvim_feedkeys("i", 'm', true)
     vim.api.nvim_feedkeys(password, 'm', true)
 end, {})
 

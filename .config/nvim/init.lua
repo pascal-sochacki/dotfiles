@@ -130,4 +130,15 @@ vim.api.nvim_create_user_command("AutoRun", function()
     attach_to_buffer(bufnr, command, pattern)
 end, {})
 
+vim.api.nvim_create_user_command("PwGen", function()
+    local char = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#"
+
+    local password = ""
+    for i = 1, vim.fn.input("Length: ") do
+        local index = math.random(1, #char)
+        password = password .. string.sub(char, index, index)
+    end
+    vim.api.nvim_feedkeys(password, 'm', true)
+end, {})
+
 

@@ -122,6 +122,6 @@ case ":$PATH:" in
 esac
 # pnpm end
 #
-
+export K9S_CONFIG_DIR="$HOME/.config/k9s"
 export PATH="$PATH:/Users/pascalsochacki/.rd/bin"
 export PATH=$PATH:"/Users/pascalsochacki/go/bin"

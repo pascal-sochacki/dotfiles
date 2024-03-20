@@ -8,10 +8,10 @@ k9s:
   ui:
     enableMouse: false
     headless: false
-    logoless: false
+    logoless: true
     crumbsless: false
     reactive: false
-    noIcons: false
+    noIcons: true
     defaultsToFullScreen: false
   skipLatestRevCheck: false
   disablePodCounting: false

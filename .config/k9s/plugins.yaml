@@ -72,7 +72,7 @@ plugins:
         -n $NAMESPACE $NAME
         | less -K
   reconcile-helm-repo:
-    shortCut: Shift-Z
+    shortCut: Shift-R
     description: Flux reconcile
     scopes:
       - helmrepositories
@@ -88,7 +88,7 @@ plugins:
         -n $NAMESPACE $NAME
         | less -K
   reconcile-oci-repo:
-    shortCut: Shift-Z
+    shortCut: Shift-R
     description: Flux reconcile
     scopes:
       - ocirepositories

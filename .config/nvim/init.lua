@@ -41,9 +41,9 @@ vim.filetype.add({
     }
 })
 
-autocmd({'BufNewFile', 'BufRead'}, {
+autocmd({ 'BufNewFile', 'BufRead' }, {
     group = pascal,
-    pattern = { '*/templates/*.yaml'},
+    pattern = { '*/templates/*.yaml' },
     callback = function()
         vim.opt_local.filetype = 'helm'
     end,
@@ -141,5 +141,3 @@ vim.api.nvim_create_user_command("PwGen", function()
     vim.api.nvim_feedkeys("i", 'm', true)
     vim.api.nvim_feedkeys(password, 'm', true)
 end, {})
-
-

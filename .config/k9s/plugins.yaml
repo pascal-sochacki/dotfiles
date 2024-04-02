@@ -1,8 +1,15 @@
-# $HOME/.k9s/plugin.yml
-# move selected line to chosen resource in K9s, then:
-# Shift-T (with confirmation) to toggle helm releases or kustomizations suspend and resume
-# Shift-R (no confirmation) to reconcile a git source or a helm release or a kustomization
 plugins:
+  k8sgpt:
+    shortCut: Shift-J
+    confirm: true
+    description: "Run K8sGPT analyse"
+    scopes:
+      - all
+    command: bash
+    background: false
+    args:
+      - -c
+      - "k8sgpt analyse | less -K"
   toggle-helmrelease:
     shortCut: Shift-T
     confirm: true
@@ -150,25 +157,6 @@ plugins:
         reconcile image update
         --context $CONTEXT
         -n $NAMESPACE $NAME
-        | less -K
-  trace:
-    shortCut: Shift-A
-    confirm: false
-    description: Flux trace
-    scopes:
-      - all
-    command: bash
-    background: false
-    args:
-      - -c
-      - >-
-        resource=$(echo $RESOURCE_NAME | sed -E 's/ies$/y/' | sed -E 's/ses$/se/' | sed -E 's/(s|es)$//g')
-        flux
-        trace
-        --context $CONTEXT
-        --kind $resource
-        --api-version $RESOURCE_GROUP/$RESOURCE_VERSION
-        --namespace $NAMESPACE $NAME
         | less -K
   # credits: https://github.com/fluxcd/flux2/discussions/2494
   get-suspended-helmreleases:

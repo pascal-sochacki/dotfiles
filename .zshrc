@@ -123,5 +123,6 @@ esac
 # pnpm end
 #
 export K9S_CONFIG_DIR="$HOME/.config/k9s"
+export XDG_CONFIG_HOME="$HOME/.config"
 export PATH="$PATH:/Users/pascalsochacki/.rd/bin"
 export PATH=$PATH:"/Users/pascalsochacki/go/bin"

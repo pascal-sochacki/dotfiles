@@ -1,4 +1,15 @@
 plugins:
+  helm-values:
+    shortCut: Shift-V
+    confirm: true
+    description: "Run K8sGPT analyse"
+    scopes:
+      - helm
+    command: bash
+    background: false
+    args:
+      - -c
+      - " helm get values $NAME -n $NAMESPACE --all | nvim -c 'set filetype=yaml'"
   k8sgpt:
     shortCut: Shift-J
     confirm: true

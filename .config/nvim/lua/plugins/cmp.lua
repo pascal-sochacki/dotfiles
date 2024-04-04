@@ -21,7 +21,10 @@ return { -- Autocompletion
         --  nvim-cmp does not ship with all sources by default. They are split
         --  into multiple repos for maintenance purposes.
         'hrsh7th/cmp-nvim-lsp',
+        'hrsh7th/cmp-buffer',
         'hrsh7th/cmp-path',
+        'hrsh7th/cmp-cmdline',
+        'hrsh7th/nvim-cmp',
 
         "rafamadriz/friendly-snippets",
         -- If you want to add a bunch of pre-configured snippets,
@@ -33,6 +36,7 @@ return { -- Autocompletion
     config = function()
         -- See `:help cmp`
         local cmp = require 'cmp'
+
         local luasnip = require 'luasnip'
         luasnip.config.setup {}
 
@@ -91,5 +95,17 @@ return { -- Autocompletion
                 { name = 'buffer' },
             },
         }
+        local autocomplete_group = vim.api.nvim_create_augroup('vimrc_autocompletion', { clear = true })
+        vim.api.nvim_create_autocmd('FileType', {
+            pattern = { 'sql', 'mysql', 'plsql' },
+            callback = function()
+                cmp.setup.buffer({
+                    sources = {
+                        { name = 'vim-dadbod-completion' },
+                    },
+                })
+            end,
+            group = autocomplete_group,
+        })
     end,
 }

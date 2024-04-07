@@ -78,6 +78,7 @@ return {
                                     ["https://json.schemastore.org/helmfile.json"] = "helmfile.{yml,yaml}",
                                     ["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] = "/*docker-compose*.{yml,yaml}",
                                     ["https://gitlab.com/gitlab-org/gitlab/-/raw/master/app/assets/javascripts/editor/schema/ci.json"] = "*gitlab-ci*.{yml,yaml}",
+                                    ["https://json.schemastore.org/chart.json"] = "Chart.{yml,yaml}",
                                     kubernetes = "/*.yaml"
                                 }
                             }

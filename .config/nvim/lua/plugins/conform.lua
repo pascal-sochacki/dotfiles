@@ -18,6 +18,7 @@ return {
             yaml = { "prettier" },
             json = { "prettier" },
             typescript = { "prettier" },
+            typescriptreact = { "prettier" },
         },
     },
 }

@@ -1,15 +1,35 @@
 plugins:
+  open-ingress:
+    shortCut: Shift-O
+    description: "open in browser"
+    scopes:
+      - ingress
+    command: bash
+    background: false
+    args:
+      - -c
+      - "open http://$COL-HOSTS"
+  curl-ingress:
+    shortCut: Shift-C
+    description: "curl ingress"
+    scopes:
+      - ingress
+    command: bash
+    background: false
+    args:
+      - -c
+      - "curl -v http://$COL-HOSTS | less"
   helm-values:
     shortCut: Shift-V
     confirm: true
-    description: "Run K8sGPT analyse"
+    description: "open all values in nvim"
     scopes:
       - helm
     command: bash
     background: false
     args:
       - -c
-      - " helm get values $NAME -n $NAMESPACE --all | nvim -c 'set filetype=yaml'"
+      - "helm get values $NAME -n $NAMESPACE --all | nvim -c 'set filetype=yaml'"
   k8sgpt:
     shortCut: Shift-J
     confirm: true

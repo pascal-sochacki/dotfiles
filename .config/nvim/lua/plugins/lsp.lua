@@ -5,27 +5,50 @@ return {
         "williamboman/mason-lspconfig.nvim",
         "b0o/schemastore.nvim",
         'towolf/vim-helm',
-        "j-hui/fidget.nvim",
     },
     config = function()
-        local cmp = require('cmp')
-        local cmp_lsp = require("cmp_nvim_lsp")
-        local capabilities = vim.tbl_deep_extend(
-            "force",
-            {},
-            vim.lsp.protocol.make_client_capabilities(),
-            cmp_lsp.default_capabilities())
+        vim.api.nvim_create_autocmd('LspAttach', {
+            group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
+            callback = function(event)
+                local map = function(keys, func, desc)
+                    vim.keymap.set('n', keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
+                end
+                map('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
+                map('K', vim.lsp.buf.hover, 'Hover Documentation')
+                map('<leader>vca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+                map('<leader>vrr', vim.lsp.buf.references, 'references')
+                map('<leader>vrn', vim.lsp.buf.rename, '[R]e[n]ame')
+                local client = vim.lsp.get_client_by_id(event.data.client_id)
+                if client and client.server_capabilities.documentHighlightProvider then
+                    vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
+                        buffer = event.buf,
+                        callback = vim.lsp.buf.document_highlight,
+                    })
 
-        require("fidget").setup({})
+                    vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
+                        buffer = event.buf,
+                        callback = vim.lsp.buf.clear_references,
+                    })
+                end
+            end
+        })
+
+        local capabilities = vim.lsp.protocol.make_client_capabilities()
+        capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
+
+        local servers = {
+            lua_ls = {},
+            helm_ls = {},
+            yamlls = {},
+            tsserver = {}
+        }
+
         require("mason").setup()
 
+        local ensure_installed = vim.tbl_keys(servers or {})
+
         require("mason-lspconfig").setup({
-            ensure_installed = {
-                "lua_ls",
-                "helm_ls",
-                "yamlls",
-                "tsserver",
-            },
+            ensure_installed = ensure_installed,
             handlers = {
                 function(server_name) -- default handler (optional)
                     require("lspconfig")[server_name].setup {

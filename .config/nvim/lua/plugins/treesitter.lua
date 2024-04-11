@@ -1,7 +1,6 @@
 return {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
-    event = { "LazyFile", "VeryLazy" },
     config = function()
         require("nvim-treesitter.configs").setup({
             -- A list of parser names, or "all"
@@ -18,7 +17,8 @@ return {
             auto_install = true,
 
             indent = {
-                enable = true
+                enable = true,
+                disable = { 'yaml' }
             },
 
             highlight = {

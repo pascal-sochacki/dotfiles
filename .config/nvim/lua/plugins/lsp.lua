@@ -40,6 +40,9 @@ return {
             lua_ls = {},
             helm_ls = {},
             yamlls = {},
+            gopls = {},
+            tailwindcss = {},
+            eslint = {},
             tsserver = {}
         }
 

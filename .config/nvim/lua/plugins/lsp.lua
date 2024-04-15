@@ -36,22 +36,20 @@ return {
         local capabilities = vim.lsp.protocol.make_client_capabilities()
         capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
 
-        local servers = {
-            lua_ls = {},
-            helm_ls = {},
-            yamlls = {},
-            gopls = {},
-            tailwindcss = {},
-            eslint = {},
-            tsserver = {}
-        }
-
         require("mason").setup()
 
-        local ensure_installed = vim.tbl_keys(servers or {})
 
         require("mason-lspconfig").setup({
-            ensure_installed = ensure_installed,
+            ensure_installed = {
+                "lua_ls",
+                "helm_ls",
+                "jsonls",
+                "yamlls",
+                "gopls",
+                "tailwindcss",
+                "eslint",
+                "tsserver"
+            },
             handlers = {
                 function(server_name) -- default handler (optional)
                     require("lspconfig")[server_name].setup {

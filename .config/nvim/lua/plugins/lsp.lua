@@ -89,6 +89,7 @@ return {
                                 singleQuote = false,
                                 bracketSpacing = true
                             },
+                            keyOrdering = true,
                             validate = true,
                             completion = true,
                             hover = true,

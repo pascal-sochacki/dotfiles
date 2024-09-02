@@ -126,3 +126,41 @@ vim.api.nvim_create_user_command("PwGen", function()
     vim.api.nvim_feedkeys("i", 'm', true)
     vim.api.nvim_feedkeys(password, 'm', true)
 end, {})
+
+
+local function get_keys(root)
+    local keys = {}
+    for node, name in root:iter_children() do
+        if name == "key" then
+            table.insert(keys, node)
+        end
+
+        if node:child_count() > 0 then
+            for _, child in pairs(get_keys(node)) do
+                table.insert(keys, child)
+            end
+        end
+    end
+    return keys
+end
+
+vim.api.nvim_create_user_command("YAMLPaste", function()
+    local reg = vim.fn.getreg('"')
+    local key, value = reg:match("(%a[%w%.]*)%s*=%s*\"?([^\"]+)\"?")
+
+    if key == nil or value == nil then
+        print("could not match key and value...")
+        return
+    end
+
+    vim.fn.jobstart("", {
+        stdout_buffered = true,
+    })
+    local cmd = string.format("!yq '.%s = \"%s\"' -i %s", key, value, "%")
+    vim.cmd(cmd)
+end, {})
+
+vim.api.nvim_create_user_command("YAMLSort", function()
+    local cmd = string.format("!yq -i -P 'sort_keys(..)' %s", "%")
+    vim.cmd(cmd)
+end, {})

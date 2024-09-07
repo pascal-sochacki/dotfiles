@@ -16,6 +16,7 @@ return {
             -- is found.
             javascript = { "prettier" },
             yaml = { "prettier" },
+            markdown = { "prettier" },
             json = { "prettier" },
             typescript = { "prettier" },
             typescriptreact = { "prettier" },
